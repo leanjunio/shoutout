@@ -1,13 +1,12 @@
 "use server";
 
-import { z } from "zod";
-import { formSchema } from "./page";
 import { db } from "@vercel/postgres";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import { FormSchema } from "@/lib/types/auth";
 
-export async function signup(data: z.infer<typeof formSchema>) {
+export async function signup(data: FormSchema) {
     try {
         const client = await db.connect();
         await client.sql`INSERT INTO Users (username, password) VALUES (${data.username}, ${data.password})`;
@@ -16,7 +15,7 @@ export async function signup(data: z.infer<typeof formSchema>) {
     }
 }
 
-export async function login(data: z.infer<typeof formSchema>) {
+export async function login(data: FormSchema) {
     try {
         const client = await db.connect();
         const { rows } =

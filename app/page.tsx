@@ -13,33 +13,18 @@ import { Input } from "@/components/ui/input";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { toast } from "@/hooks/use-toast";
-import { z } from "zod";
 import { signup } from "./actions";
-
-export const formSchema = z.object({
-    username: z
-        .string()
-        .min(2, {
-            message: "username must be at least 2 characters.",
-        })
-        .max(50),
-    password: z
-        .string()
-        .min(8, {
-            message: "password must be at least 8 characters",
-        })
-        .max(30),
-});
+import { FormSchema, formSchema } from "@/lib/types/auth";
 
 export default function Home() {
-    const form = useForm<z.infer<typeof formSchema>>({
+    const form = useForm<FormSchema>({
         resolver: zodResolver(formSchema),
         defaultValues: {
             username: "",
         },
     });
 
-    async function onSubmit(data: z.infer<typeof formSchema>) {
+    async function onSubmit(data: FormSchema) {
         try {
             const response = await signup(data);
             console.log(response);
