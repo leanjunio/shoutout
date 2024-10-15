@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("should be able to login successfully", async ({ page }) => {
+test("should be able to login successfully", async ({ page, context }) => {
     await page.goto("http://localhost:3000/login");
     await expect(page.getByText("Login")).toBeVisible();
 
@@ -15,6 +15,9 @@ test("should be able to login successfully", async ({ page }) => {
 
     const first = page.getByText(`Welcome ${USERNAME}`).first();
     await expect(first).toBeVisible();
+
+    const cookies = await context.cookies();
+    await expect(cookies.find((c) => c.name === "token")).toBeTruthy();
 });
 
 test("should not be able to login with invalid credentials", async ({

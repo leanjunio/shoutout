@@ -3,6 +3,8 @@
 import { z } from "zod";
 import { formSchema } from "./page";
 import { db } from "@vercel/postgres";
+import jwt from "jsonwebtoken";
+import { cookies } from "next/headers";
 
 export async function signup(data: z.infer<typeof formSchema>) {
     try {
@@ -22,6 +24,20 @@ export async function login(data: z.infer<typeof formSchema>) {
         if (rows.length === 0) {
             throw new Error("Invalid credentials");
         }
+
+        const token = await jwt.sign(
+            { username: data.username },
+            process.env.JWT_SECRET!,
+            {
+                expiresIn: "1d",
+            }
+        );
+
+        cookies().set({
+            name: "token",
+            value: token,
+            httpOnly: true,
+        });
 
         return rows[0];
     } catch (error) {
