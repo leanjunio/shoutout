@@ -5,6 +5,7 @@ import { formSchema } from "./page";
 import { db } from "@vercel/postgres";
 import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 export async function signup(data: z.infer<typeof formSchema>) {
     try {
@@ -39,9 +40,12 @@ export async function login(data: z.infer<typeof formSchema>) {
             httpOnly: true,
         });
 
+        console.log({ rows });
         return rows[0];
     } catch (error) {
         console.error(error);
         throw error;
+    } finally {
+        redirect("/dashboard");
     }
 }

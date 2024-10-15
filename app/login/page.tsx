@@ -41,10 +41,10 @@ export default function Login() {
 
     async function onSubmit(data: z.infer<typeof formSchema>) {
         try {
-            const { username } = await login(data);
+            await login(data);
             toast({
                 title: "Hooray!",
-                description: `Welcome ${username}!`,
+                description: `Welcome ${data.username}!`,
             });
         } catch (error) {
             if (error.message === "Invalid credentials") {
@@ -54,12 +54,7 @@ export default function Login() {
                     variant: "destructive",
                 });
             }
-
-            return toast({
-                title: "Error",
-                description: "We weren't able to log you in. Please try again.",
-                variant: "destructive",
-            });
+            console.log("some error occurred", error);
         }
     }
 
