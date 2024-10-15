@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { cookies } from "next/headers";
-import { Button } from "@/components/ui/button";
+import LogoutButton from "../buttons/logout";
+import LoginButton from "../buttons/login";
+import SignupButton from "../buttons/signup";
 
 export default function Navbar() {
     const token = cookies().get("token");
@@ -41,15 +43,11 @@ export default function Navbar() {
                     </nav>
                     <div className="flex items-center gap-4">
                         {token ? (
-                            <Button variant="outline" size="sm">
-                                Dashboard
-                            </Button>
+                            <LogoutButton />
                         ) : (
                             <>
-                                <Button variant="outline" size="sm">
-                                    Sign in
-                                </Button>
-                                <Button size="sm">Sign up</Button>
+                                <LoginButton />
+                                <SignupButton />
                             </>
                         )}
                     </div>

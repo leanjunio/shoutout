@@ -49,3 +49,16 @@ export async function login(data: z.infer<typeof formSchema>) {
         redirect("/dashboard");
     }
 }
+
+export async function logout() {
+    cookies().delete("token");
+    redirect("/");
+}
+
+export async function goToLogin() {
+    redirect("/login");
+}
+
+export async function goToSignup() {
+    redirect("/");
+}
