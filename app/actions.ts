@@ -6,12 +6,8 @@ import { db } from "@vercel/postgres";
 
 export async function signup(data: z.infer<typeof formSchema>) {
     try {
-        console.log({ data });
         const client = await db.connect();
-        const response =
-            await client.sql`INSERT INTO Users (username, password) VALUES (${data.username}, ${data.password})`;
-
-        return response;
+        await client.sql`INSERT INTO Users (username, password) VALUES (${data.username}, ${data.password})`;
     } catch (error) {
         console.error(error);
     }
