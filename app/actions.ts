@@ -5,6 +5,8 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormSchema } from "@/lib/types/auth";
+import { getUserFromToken } from "@/lib/auth";
+import { ShoutoutWithCoordinates } from "@/lib/types/shoutout";
 
 export async function signup(data: FormSchema) {
     try {
@@ -60,4 +62,24 @@ export async function goToLogin() {
 
 export async function goToSignup() {
     redirect("/");
+}
+
+export async function shoutout(data: ShoutoutWithCoordinates) {
+    const token = cookies().get("token");
+
+    if (!token) {
+        throw new Error("Unauthorized");
+    }
+
+    const username = getUserFromToken(token.value);
+
+    try {
+        const client = await db.connect();
+        await client.sql`
+            INSERT INTO Shoutouts (username, message, longitude, latitude)
+            VALUES (${username}, ${data.message}, ${data.longitude}, ${data.latitude})
+        `;
+    } catch (error) {
+        console.error(error);
+    }
 }
