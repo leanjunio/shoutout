@@ -35,8 +35,18 @@ export default function Dashboard() {
                 });
                 console.log("Latitude is :", position.coords.latitude);
                 console.log("Longitude is :", position.coords.longitude);
+                toast({
+                    title: "Shoutout broadcasted!",
+                    description: "Your message has been sent out.",
+                });
             } catch (error) {
                 console.error(error);
+                toast({
+                    variant: "destructive",
+                    title: "Error",
+                    description:
+                        "Your shoutout could not be broadcasted. Please try again.",
+                });
             }
         });
     }
