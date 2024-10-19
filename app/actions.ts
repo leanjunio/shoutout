@@ -38,13 +38,13 @@ export async function login(data: FormSchema) {
             }
         );
 
+        console.log({ token });
         cookies().set({
             name: "token",
             value: token,
             // httpOnly: true,
         });
 
-        console.log({ rows });
         return rows[0];
     } catch (error) {
         console.error(error);
