@@ -12,34 +12,7 @@ export default function Navbar() {
             <div className="w-full max-w-7xl mx-auto px-4">
                 <div className="flex justify-between h-14 items-center">
                     <nav className="hidden md:flex gap-4">
-                        <Link
-                            href="#"
-                            className="font-medium flex items-center text-sm transition-colors hover:underline"
-                            prefetch={false}
-                        >
-                            Home
-                        </Link>
-                        <Link
-                            href="#"
-                            className="font-medium flex items-center text-sm transition-colors hover:underline"
-                            prefetch={false}
-                        >
-                            About
-                        </Link>
-                        <Link
-                            href="#"
-                            className="font-medium flex items-center text-sm transition-colors hover:underline"
-                            prefetch={false}
-                        >
-                            Services
-                        </Link>
-                        <Link
-                            href="#"
-                            className="font-medium flex items-center text-sm transition-colors hover:underline"
-                            prefetch={false}
-                        >
-                            Contact
-                        </Link>
+                        <Link href="/">Shoutouts</Link>
                     </nav>
                     <div className="flex items-center gap-4">
                         {token ? (

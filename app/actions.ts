@@ -1,7 +1,6 @@
 "use server";
 
 import { db } from "@vercel/postgres";
-import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormSchema } from "@/lib/types/auth";
