@@ -9,7 +9,6 @@ import {
 } from "@/components/ui/table";
 import { fetchShoutouts } from "@/app/actions";
 import { useEffect, useState } from "react";
-import { z } from "zod";
 import { ReceivedShoutout } from "@/lib/types/shoutout";
 
 export function Shoutouts() {
