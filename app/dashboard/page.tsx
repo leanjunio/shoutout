@@ -39,6 +39,7 @@ export default function Dashboard() {
                     description: "Your message has been sent out.",
                 });
             } catch (error) {
+                console.error(error);
                 toast({
                     variant: "destructive",
                     title: "Error",
