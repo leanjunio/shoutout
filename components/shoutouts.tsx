@@ -3,16 +3,14 @@ import {
     TableBody,
     TableCaption,
     TableCell,
-    TableFooter,
     TableHead,
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import { db, QueryResultRow } from "@vercel/postgres";
 import { fetchShoutouts } from "@/app/actions";
 import { useEffect, useState } from "react";
 import { z } from "zod";
-import { ReceivedShoutout, receivedShoutoutSchema } from "@/lib/types/shoutout";
+import { ReceivedShoutout } from "@/lib/types/shoutout";
 
 export function Shoutouts() {
     const [shouts, setShouts] = useState<ReceivedShoutout[]>([]);
