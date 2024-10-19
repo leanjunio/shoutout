@@ -16,6 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { shoutout } from "../actions";
 import { Shoutout, shoutoutSchema } from "@/lib/types/shoutout";
+import { Shoutouts } from "@/components/shoutouts";
 
 export default function Dashboard() {
     const form = useForm<Shoutout>({
@@ -53,7 +54,7 @@ export default function Dashboard() {
 
     return (
         <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-            <main className="flex flex-col row-start-2 items-center sm:items-start w-2/4">
+            <main className="flex gap-5 row-start-2 items-center sm:items-start w-3/4">
                 <Form {...form}>
                     <form
                         onSubmit={form.handleSubmit(onSubmit)}
@@ -82,6 +83,9 @@ export default function Dashboard() {
                         <Button type="submit">Shoutout</Button>
                     </form>
                 </Form>
+                <div className="w-full">
+                    <Shoutouts />
+                </div>
             </main>
         </div>
     );

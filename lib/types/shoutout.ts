@@ -12,11 +12,21 @@ export const shoutoutSchema = z.object({
         }),
 });
 
-export const shoutoutWithCoordinates = shoutoutSchema.merge(
-    z.object({
-        longitude: z.number(),
-        latitude: z.number(),
-    })
-);
+const coordinatesSchema = z.object({
+    longitude: z.number(),
+    latitude: z.number(),
+});
+
+export const receivedShoutoutSchema = z.object({
+    longitude: z.number(),
+    latitude: z.number(),
+    username: z.string(),
+    message: z.string(),
+    distance_meters: z.number(),
+});
+
+export type ReceivedShoutout = z.infer<typeof receivedShoutoutSchema>;
+
+export const shoutoutWithCoordinates = shoutoutSchema.merge(coordinatesSchema);
 
 export type ShoutoutWithCoordinates = z.infer<typeof shoutoutWithCoordinates>;

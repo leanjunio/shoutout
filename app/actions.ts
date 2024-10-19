@@ -6,7 +6,10 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormSchema } from "@/lib/types/auth";
 import { getUserFromToken } from "@/lib/auth";
-import { ShoutoutWithCoordinates } from "@/lib/types/shoutout";
+import {
+    ReceivedShoutout,
+    ShoutoutWithCoordinates,
+} from "@/lib/types/shoutout";
 
 export async function signup(data: FormSchema) {
     try {
@@ -79,6 +82,31 @@ export async function shoutout(data: ShoutoutWithCoordinates) {
             INSERT INTO Shoutouts (username, message, longitude, latitude)
             VALUES (${username}, ${data.message}, ${data.longitude}, ${data.latitude})
         `;
+    } catch (error) {
+        console.error(error);
+    }
+}
+
+export async function fetchShoutouts(data: {
+    latitude: number;
+    longitude: number;
+}) {
+    try {
+        const client = await db.connect();
+        const { rows } = await client.sql`SELECT 
+            username, 
+            message, 
+            longitude, 
+            latitude, 
+            ST_Distance(
+                ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography, 
+                ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326)::geography
+            ) AS distance_meters
+            FROM shoutouts
+            ORDER BY ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography <-> ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326)::geography
+            LIMIT 10;`;
+        console.log({ rows });
+        return rows as ReceivedShoutout[];
     } catch (error) {
         console.error(error);
     }
