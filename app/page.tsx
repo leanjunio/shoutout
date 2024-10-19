@@ -26,7 +26,7 @@ export default function Home() {
 
     async function onSubmit(data: FormSchema) {
         try {
-            const response = await signup(data);
+            await signup(data);
             toast({
                 title: "Hooray!",
                 description: "Successfully signed up.",
