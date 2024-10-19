@@ -5,7 +5,7 @@ import jwt from "jsonwebtoken";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { FormSchema } from "@/lib/types/auth";
-import { getUserFromToken } from "@/lib/auth";
+import { getUserFromToken, signToken } from "@/lib/auth";
 import {
     ReceivedShoutout,
     ShoutoutWithCoordinates,
@@ -22,6 +22,7 @@ export async function signup(data: FormSchema) {
 
 export async function login(data: FormSchema) {
     try {
+        console.log("executing...");
         const client = await db.connect();
         const { rows } =
             await client.sql`SELECT * FROM Users WHERE username = ${data.username} AND password = ${data.password}`;
@@ -30,33 +31,24 @@ export async function login(data: FormSchema) {
             throw new Error("Invalid credentials");
         }
 
-        const token = await jwt.sign(
-            { username: data.username },
-            process.env.JWT_SECRET!,
-            {
-                expiresIn: "1d",
-            }
-        );
+        const token = signToken(data.username);
 
-        console.log({ token });
         cookies().set({
             name: "token",
             value: token,
-            // httpOnly: true,
+            httpOnly: true,
         });
 
-        return rows[0];
+        redirect("/dashboard");
     } catch (error) {
         console.error(error);
         throw error;
-    } finally {
-        redirect("/dashboard");
     }
 }
 
 export async function logout() {
     cookies().delete("token");
-    redirect("/");
+    redirect("/login");
 }
 
 export async function goToLogin() {

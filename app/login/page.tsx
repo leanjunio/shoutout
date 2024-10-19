@@ -25,6 +25,8 @@ export default function Login() {
     });
 
     async function onSubmit(data: FormSchema) {
+        console.log("submitting", data);
+
         try {
             await login(data);
             toast({
