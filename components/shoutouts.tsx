@@ -17,7 +17,6 @@ export function Shoutouts() {
     useEffect(() => {
         navigator.geolocation.getCurrentPosition(async (position) => {
             try {
-                console.log({ ...position.coords });
                 const rows = await fetchShoutouts({
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude,
@@ -26,8 +25,6 @@ export function Shoutouts() {
                 if (!rows) {
                     return null;
                 }
-
-                console.log({ rows });
 
                 setShouts(rows);
             } catch (error) {

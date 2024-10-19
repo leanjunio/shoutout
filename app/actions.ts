@@ -22,7 +22,6 @@ export async function signup(data: FormSchema) {
 
 export async function login(data: FormSchema) {
     try {
-        console.log("executing...");
         const client = await db.connect();
         const { rows } =
             await client.sql`SELECT * FROM Users WHERE username = ${data.username} AND password = ${data.password}`;
@@ -94,7 +93,6 @@ export async function fetchShoutouts(data: {
             FROM shoutouts
             ORDER BY ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography <-> ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326)::geography
             LIMIT 10;`;
-        console.log({ rows });
         return rows as ReceivedShoutout[];
     } catch (error) {
         console.error(error);
