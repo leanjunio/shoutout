@@ -41,7 +41,7 @@ export async function login(data: FormSchema) {
         cookies().set({
             name: "token",
             value: token,
-            httpOnly: true,
+            // httpOnly: true,
         });
 
         console.log({ rows });
