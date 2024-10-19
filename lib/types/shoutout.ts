@@ -18,9 +18,6 @@ const coordinatesSchema = z.object({
 });
 
 export const receivedShoutoutSchema = z.object({
-    longitude: z.number(),
-    latitude: z.number(),
-    username: z.string(),
     message: z.string(),
     distance_meters: z.number(),
 });

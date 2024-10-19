@@ -41,30 +41,17 @@ export function Shoutouts() {
 
     return (
         <Table>
-            <TableCaption>A list of your recent invoices.</TableCaption>
+            <TableCaption>Shouts nearest to you</TableCaption>
             <TableHeader>
                 <TableRow>
-                    <TableHead className="w-[100px]">Username</TableHead>
                     <TableHead>Shout</TableHead>
                     <TableHead>Distance</TableHead>
                 </TableRow>
             </TableHeader>
             <TableBody>
                 {shouts.map((shout, i) => {
-                    console.log(shout.distance_meters);
-
-                    console.log({
-                        shout: new Intl.NumberFormat("en-US", {
-                            style: "unit",
-                            unit: "kilometer",
-                        }).format(shout.distance_meters),
-                    });
-
                     return (
                         <TableRow key={i}>
-                            <TableCell className="font-medium">
-                                {shout.username}
-                            </TableCell>
                             <TableCell>{shout.message}</TableCell>
                             <TableCell>
                                 {new Intl.NumberFormat("en-US", {

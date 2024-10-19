@@ -94,10 +94,7 @@ export async function fetchShoutouts(data: {
     try {
         const client = await db.connect();
         const { rows } = await client.sql`SELECT 
-            username, 
-            message, 
-            longitude, 
-            latitude, 
+            message,
             ST_Distance(
                 ST_SetSRID(ST_MakePoint(longitude, latitude), 4326)::geography, 
                 ST_SetSRID(ST_MakePoint(${data.longitude}, ${data.latitude}), 4326)::geography
