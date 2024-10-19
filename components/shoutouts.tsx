@@ -50,15 +50,17 @@ export function Shoutouts() {
             </TableHeader>
             <TableBody>
                 {shouts.map((shout, i) => {
+                    const distance =
+                        shout.distance_meters < 1
+                            ? "< 1 km"
+                            : new Intl.NumberFormat("en-US", {
+                                  style: "unit",
+                                  unit: "kilometer",
+                              }).format(shout.distance_meters);
                     return (
                         <TableRow key={i}>
                             <TableCell>{shout.message}</TableCell>
-                            <TableCell>
-                                {new Intl.NumberFormat("en-US", {
-                                    style: "unit",
-                                    unit: "kilometer",
-                                }).format(shout.distance_meters)}
-                            </TableCell>
+                            <TableCell>{distance}</TableCell>
                         </TableRow>
                     );
                 })}
